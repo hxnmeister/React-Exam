@@ -27,7 +27,7 @@ const schema = mongoose.Schema
                     type: String,
                     validate:
                     {
-                        validator: (line) => /^#\w+/.test(line),
+                        validator: (value) => /^#\w+/.test(value),
                         message: (props) => `${props.value} doesn't start with '#' symbol!`
                     }
                 }   
@@ -41,6 +41,11 @@ const schema = mongoose.Schema
             min: 1,
             max: 10,
             default: 1
+        },
+        user:
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: 'User'
         }
     }
 );

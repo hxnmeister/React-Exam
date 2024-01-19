@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dbConnection from "./db/index.mjs";
 import activityRoutes from "./routes/activities.mjs";
+import userRoutes from "./routes/users.mjs";
 
 const app = express();
 
@@ -11,6 +12,7 @@ dbConnection.on('error', () => console.log("DB connection failed!"));
 app.use(express.json());
 
 app.use('', activityRoutes);
+app.use('', userRoutes)
 
 app.get('/', (req, res) => 
 {
