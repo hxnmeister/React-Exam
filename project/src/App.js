@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import { allActivities } from './asyncThunks/activityThunk';
 import { useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
 function App() 
 {
@@ -16,8 +16,11 @@ function App()
 
   return (
     <>
-      <h1>App</h1>
-      {activities.map( (item, index) => <p key={index}>{ item.title }</p> )}
+      <nav>
+        <NavLink to='/'>Home</NavLink>
+        <NavLink to='/login'>Login</NavLink>
+        <NavLink to='/signup'>Sign Up</NavLink>
+      </nav>
 
       <Outlet/>
     </>
