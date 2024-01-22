@@ -1,24 +1,26 @@
-import logo from './logo.svg';
+import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
+import { allActivities } from './asyncThunks/activityThunk';
+import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 
-function App() {
+function App() 
+{
+  const { activities } = useSelector( (state) => state.activity )
+  const dispatch = useDispatch();
+
+  useEffect( () => 
+  {
+    dispatch(allActivities());
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>App</h1>
+      {activities.map( (item, index) => <p key={index}>{ item.title }</p> )}
+
+      <Outlet/>
+    </>
   );
 }
 

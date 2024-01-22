@@ -10,6 +10,7 @@ dbConnection.on('connected', () => console.log("DB successfully connected!"));
 dbConnection.on('error', () => console.log("DB connection failed!"));
 
 app.use(express.json());
+app.use(cors());
 
 app.use('', activityRoutes);
 app.use('', userRoutes)
