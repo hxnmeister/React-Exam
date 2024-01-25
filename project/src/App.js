@@ -1,25 +1,35 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
-import { allActivities } from './asyncThunks/activityThunk';
 import { useEffect } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { fetchUserData, logout } from './asyncThunks/authThunk';
 
 function App() 
 {
-  const { activities } = useSelector( (state) => state.activity )
+  const { userData, token } = useSelector( (state) => state.auth )
   const dispatch = useDispatch();
 
   useEffect( () => 
   {
-    dispatch(allActivities());
+    dispatch(fetchUserData());
   }, []);
 
   return (
     <>
       <nav>
         <NavLink to='/'>Home</NavLink>
-        <NavLink to='/login'>Login</NavLink>
-        <NavLink to='/signup'>Sign Up</NavLink>
+
+        {
+          token ?
+          <>
+            { userData.name }
+            <button onClick={ () => dispatch(logout()) }>Logout</button>
+          </> :
+          <>
+            <NavLink to='/login'>Login</NavLink>
+            <NavLink to='/signup'>Sign Up</NavLink>
+          </>
+        }
       </nav>
 
       <Outlet/>

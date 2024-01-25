@@ -24,7 +24,7 @@ const register = async (req, res) =>
 
         await newUser.save();
 
-        res.status(200).json({ newUser, token });
+        res.status(200).json({ user: { id: newUser._id, email: newUser.email, name: newUser.name }, token });
     } 
     catch (error) 
     {
@@ -62,7 +62,7 @@ const login = async (req, res) =>
 
     const token = jwt.sign({ userId: user._id }, 'secret', { expiresIn: '24h' });
 
-    res.status(200).json({ user, token });
+    res.status(200).json({ user: { id: user._id, email: user.email, name: user.name }, token });
 };
 
 const getAuthUser = async (req, res) =>
@@ -70,7 +70,7 @@ const getAuthUser = async (req, res) =>
     const { userId } = req.user;
     const user = await User.findById(userId);
 
-    return user ? res.json({ email: user.email, name: user.name }) 
+    return user ? res.json({ id: user._id, email: user.email, name: user.name }) 
     : res.status(400).json({ status: "error", message: "user not found!" });
 };
 

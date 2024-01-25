@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login, registration, fetchUserData } from "../asyncThunks/authThunk";
+import { login, registration, fetchUserData, logout } from "../asyncThunks/authThunk";
 
 const initialState =
 {
@@ -55,6 +55,7 @@ export const authSlice = createSlice
             {
                 state.loading = false;
                 state.userData = action.payload;
+                state.token = localStorage.getItem('token');
             })
             .addCase(fetchUserData.rejected, (state, action) => 
             {

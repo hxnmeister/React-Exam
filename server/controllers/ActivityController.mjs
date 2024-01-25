@@ -4,8 +4,7 @@ const getAll = async (req, res) =>
 {
     try
     {
-        // res.status(200).json(await Activity.find({user: req.params.id}));
-        res.status(200).json(await Activity.find());
+        res.status(200).json(await Activity.find({user: req.params.id}));
     }
     catch (error)
     {
