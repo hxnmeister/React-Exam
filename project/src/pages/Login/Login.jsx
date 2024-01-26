@@ -1,71 +1,61 @@
-import { useFormik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
-import '../../components/ErrorMessage/style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { login } from '../../asyncThunks/authThunk';
 import { initialValues } from './form/initValues';
-import { validation } from './form/validationRules';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import { validation } from './form/validationSchema';
 
 const Login = () => 
 {
-    const { token } = useSelector( (state) => state.auth );
+    const { token, error } = useSelector( (state) => state.auth );
     const dispatch = useDispatch();
-    const formik = useFormik
-    (
-        {
-            initialValues,
-            validate: validation,
-            onSubmit: (values) =>
-            {
-                dispatch(login({ email: values.email, password: values.password }));
-            }
-        }
-    );
 
     if(token || localStorage.getItem('token'))
     {
-        alert("You are already loggined in!");
         return <Navigate to='/'/>
+    }
+
+    const showAuthWarningMessage = (authType) =>
+    {
+        switch(authType)
+        {
+            case "login":
+                <div>{error.message}</div>
+            break;
+        }
     }
 
     return (
         <div>
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="email">Email:</label>
-                <input 
-                    id='email'
-                    name='email'
-                    type='email'
-                    onChange={formik.handleChange}
-                    value={formik.values.email} 
-                    className={formik.errors.email ? 'error' : ''}
-                />
-                { formik.errors.email && <ErrorMessage message={formik.errors.email}/> }
+            { error && <div>{error.message}</div> }
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validation}
+                validateOnChange
+                onSubmit={(values) => dispatch(login({email: values.email, password: values.password}))}
+            >
+                {
+                    ({ isSubmitting, isValid }) =>
+                    (
+                        <Form>
+                            <label htmlFor="email">Email:</label>
+                            <Field type="email" name="email" placeholder={initialValues.email}/>
+                            <ErrorMessage component="div" name="email"/>
+                            
+                            <label htmlFor="password">Password:</label>
+                            <Field type="password" name="password" placeholder={initialValues.password}/>
+                            <ErrorMessage component="div" name="password"/>
 
-                <label htmlFor="password">Password:</label>
-                <input 
-                    id='password'
-                    name='password'
-                    type='password'
-                    onChange={formik.handleChange}
-                    value={formik.values.password} 
-                />
-                { formik.errors.password && <ErrorMessage message={formik.errors.password}/> }
+                            <label htmlFor="repeatPassword">Repeat Password:</label>
+                            <Field type="password" name="repeatPassword" placeholder={initialValues.repeatPassword}/>
+                            <ErrorMessage component="div" name="repeatPassword"/>
 
-                <label htmlFor="repeatPassword">Repeat Password:</label>
-                <input 
-                    id='repeatPassword'
-                    name='repeatPassword'
-                    type='password'
-                    onChange={formik.handleChange}
-                    value={formik.values.repeatPassword} 
-                />
-                { formik.errors.repeatPassword && <ErrorMessage message={formik.errors.repeatPassword}/> }
-
-                <button type='submit' disabled={formik.errors.email || formik.errors.password || formik.errors.repeatPassword}>Login</button>
-            </form>
+                            <button type='submit' disabled={isSubmitting || !isValid}>Login</button>
+                        </Form>
+                    )
+                }
+            </Formik>
         </div>
     );
 }

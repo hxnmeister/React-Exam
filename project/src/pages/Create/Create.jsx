@@ -1,7 +1,6 @@
 import { useFormik } from 'formik';
 import React from 'react';
 import { initialValues } from './form/initValues';
-import '../../components/ErrorMessage/style.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { add } from '../../asyncThunks/activityThunk';
 

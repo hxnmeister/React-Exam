@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAll } from '../../asyncThunks/activityThunk';
+import Activity from '../../components/Activity/Activity';
 
 const Home = () => 
 {
@@ -19,7 +20,7 @@ const Home = () =>
 
     return (
         <div>
-            { activities && activities.map( (activity, index) => <div key={index}><span>{activity.title}</span> <br/></div> )}
+            { activities && activities.map( (activity, index) => <Activity key={index} activity={activity}/> )}
         </div>
     );
 }

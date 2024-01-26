@@ -14,6 +14,13 @@ export const authSlice = createSlice
     {
         name: 'auth',
         initialState,
+        reducers:
+        {   
+            clearError: (state) =>
+            {
+                state.error = null;
+            }
+        },
         extraReducers: (builder) =>
         {
             builder
@@ -30,7 +37,7 @@ export const authSlice = createSlice
             .addCase(login.rejected, (state, action) => 
             {
                 state.loading = false;
-                state.error = "error";
+                state.error = action.payload;
             })
             .addCase(registration.pending, (state, action) => 
             {
@@ -45,7 +52,7 @@ export const authSlice = createSlice
             .addCase(registration.rejected, (state, action) => 
             {
                 state.loading = false;
-                state.error = "error";
+                state.error = action.payload;
             })
             .addCase(fetchUserData.pending, (state, action) => 
             {
@@ -66,4 +73,5 @@ export const authSlice = createSlice
     }
 );
 
+export const { clearError } = authSlice.actions;
 export default authSlice.reducer;

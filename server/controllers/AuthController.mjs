@@ -11,6 +11,7 @@ const register = async (req, res) =>
         return res.status(400).json
         (
             {
+                authType: "registration",
                 status: "error",
                 message: "such user already exists!"
             }
@@ -41,6 +42,7 @@ const login = async (req, res) =>
         return res.status(400).json
         (
             {
+                authType: "login",
                 status: "error",
                 message: "no user with such credentials!"
             }

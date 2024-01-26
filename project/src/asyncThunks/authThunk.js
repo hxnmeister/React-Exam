@@ -10,12 +10,19 @@ export const login = createAsyncThunk('login', async (payload) =>
     return responseData;
 });
 
-export const registration = createAsyncThunk('registration', async (payload) => 
+export const registration = createAsyncThunk('registration', async (payload, thunkAPI) => 
 {
-    const responseData = (await api.post('/register', payload)).data;
-    localStorage.setItem('token', responseData.token);
-
-    return responseData;
+    try
+    {
+        const responseData = (await api.post('/register', payload)).data;
+        localStorage.setItem('token', responseData.token);
+    
+        return responseData;
+    }
+    catch (error)
+    {
+        return thunkAPI.rejectWithValue(error.response.data);
+    }
 });
 
 export const fetchUserData = createAsyncThunk('fetchUserData', async () =>

@@ -8,7 +8,7 @@ const store = configureStore
         reducer:
         {
             activity: activityReducer,
-            auth: authReducer
+            auth: authReducer,
         }
     }
 );
