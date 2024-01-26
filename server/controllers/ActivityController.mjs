@@ -1,3 +1,5 @@
+import mongoose from "mongoose";
+import User from "../models/User.mjs";
 import Activity from "../models/Activity.mjs";
 
 const getAll = async (req, res) =>
@@ -17,13 +19,13 @@ const add = async (req, res) =>
     try
     {
         const activity = new Activity(req.body);
-        await activity.save();
 
-        res.status(200).json(post);
+        await activity.save();
+        res.status(200).json(activity);
     }
     catch (error)
     {
-        res.status(400).json(error);
+        res.status(400).json({status: "error", error});
     }
 };
 

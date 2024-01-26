@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { allActivities } from "../asyncThunks/activityThunk";
+import { getAll, add } from "../asyncThunks/activityThunk";
 
 const initialState = 
 {
@@ -16,16 +16,30 @@ export const activitySlice = createSlice
         extraReducers: (builer) =>
         {
             builer
-            .addCase(allActivities.pending, (state, action) => 
+            .addCase(getAll.pending, (state, action) => 
             {
                 state.loading = true;
             })
-            .addCase(allActivities.fulfilled, (state, action) => 
+            .addCase(getAll.fulfilled, (state, action) => 
             {
                 state.loading = false;
                 state.activities = action.payload;
             })
-            .addCase(allActivities.rejected, (state, action) => 
+            .addCase(getAll.rejected, (state, action) => 
+            {
+                state.loading = false;
+                state.error = 'error';
+            })
+            .addCase(add.pending, (state, action) => 
+            {
+                state.loading = true;
+            })
+            .addCase(add.fulfilled, (state, action) => 
+            {
+                state.loading = false;
+                state.activities = action.payload;
+            })
+            .addCase(add.rejected, (state, action) => 
             {
                 state.loading = false;
                 state.error = 'error';

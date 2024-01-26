@@ -5,7 +5,6 @@ export const login = createAsyncThunk('login', async (payload) =>
 {
     const responseData = (await api.post('/login', payload)).data;
     localStorage.setItem('token', responseData.token);
-    localStorage.setItem('uId', responseData.user.id);
     
 
     return responseData;
@@ -15,7 +14,6 @@ export const registration = createAsyncThunk('registration', async (payload) =>
 {
     const responseData = (await api.post('/register', payload)).data;
     localStorage.setItem('token', responseData.token);
-    localStorage.setItem('uId', responseData.user.id);
 
     return responseData;
 });
@@ -43,5 +41,4 @@ export const fetchUserData = createAsyncThunk('fetchUserData', async () =>
 export const logout = createAsyncThunk('logout', () =>
 {
     localStorage.removeItem('token');
-    localStorage.removeItem('uId');
 });

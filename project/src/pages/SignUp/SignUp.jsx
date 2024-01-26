@@ -19,7 +19,6 @@ const SignUp = () =>
             validate: validation,
             onSubmit: (values) =>
             {
-                console.log(JSON.stringify(values));
                 dispatch(registration({ name: values.name, email: values.email, password: values.password }));
             }
         }

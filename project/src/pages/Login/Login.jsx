@@ -19,7 +19,6 @@ const Login = () =>
             validate: validation,
             onSubmit: (values) =>
             {
-                console.log(JSON.stringify(values));
                 dispatch(login({ email: values.email, password: values.password }));
             }
         }

@@ -9,7 +9,7 @@ function App()
   const { userData, token } = useSelector( (state) => state.auth )
   const dispatch = useDispatch();
 
-  useEffect( () => 
+  useEffect(() => 
   {
     dispatch(fetchUserData());
   }, []);
@@ -17,18 +17,21 @@ function App()
   return (
     <>
       <nav>
-        <NavLink to='/'>Home</NavLink>
+        <div className='main-bar'>
+          <NavLink to='/'>Home</NavLink>
+          <NavLink to='/create-activity'>Create</NavLink>
+        </div>
 
         {
           token ?
-          <>
+          <div className='additional-bar'>
             { userData.name }
             <button onClick={ () => dispatch(logout()) }>Logout</button>
-          </> :
-          <>
+          </div> :
+          <div className='additional-bar'>
             <NavLink to='/login'>Login</NavLink>
             <NavLink to='/signup'>Sign Up</NavLink>
-          </>
+          </div>
         }
       </nav>
 
