@@ -29,3 +29,27 @@ export const add = createAsyncThunk('add', async (payload) =>
         console.log(error);
     }
 });
+
+export const remove = createAsyncThunk('remove', async (payload) =>
+{
+    try
+    {
+        return(await api.delete(`/activities/${payload}`)).data;
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
+});
+
+export const update = createAsyncThunk('update', async (payload) =>
+{
+    try
+    {
+        return(await api.put(`/activities/${payload._id}`, payload)).data;
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
+});

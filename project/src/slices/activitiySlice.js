@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAll, add } from "../asyncThunks/activityThunk";
+import { getAll, add, remove, update } from "../asyncThunks/activityThunk";
 
 const initialState = 
 {
@@ -40,6 +40,34 @@ export const activitySlice = createSlice
                 state.activities = action.payload;
             })
             .addCase(add.rejected, (state, action) => 
+            {
+                state.loading = false;
+                state.error = 'error';
+            })
+            .addCase(remove.pending, (state, action) => 
+            {
+                state.loading = true;
+            })
+            .addCase(remove.fulfilled, (state, action) => 
+            {
+                state.loading = false;
+                state.activities = action.payload;
+            })
+            .addCase(remove.rejected, (state, action) => 
+            {
+                state.loading = false;
+                state.error = 'error';
+            })
+            .addCase(update.pending, (state, action) => 
+            {
+                state.loading = true;
+            })
+            .addCase(update.fulfilled, (state, action) => 
+            {
+                state.loading = false;
+                state.activities = action.payload;
+            })
+            .addCase(update.rejected, (state, action) => 
             {
                 state.loading = false;
                 state.error = 'error';
