@@ -37,35 +37,25 @@
   }
 }
 
+
 nav
 {
-  padding: 10px;
-  display: flex;
-  gap: 0.8em;
+  width: 100%;
+  height: 100%;
 }
-
-nav > a
-{
-  text-decoration: none;
-}
-
-nav > .main-bar
+nav, .auth
 {
   display: flex;
   justify-content: center;
-  width: 100%;
-  height: 100%;
   gap: 10px;
 }
-nav > .additional-bar
+nav a
 {
-  margin-right: 10px;
+  text-decoration: none;
 }
-nav > .additional-bar > button
+nav button
 {
-  margin-top: 10px;
-  padding: 10px;
-  border: none;
   border-radius: 5px;
-  float: inline-end;
+  cursor: pointer;
 }
+

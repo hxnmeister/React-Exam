@@ -8,7 +8,7 @@ import { validation } from './form/validationSchema';
 
 const Login = () => 
 {
-    const { token, error } = useSelector( (state) => state.auth );
+    const { token } = useSelector( (state) => state.auth );
     const dispatch = useDispatch();
 
     if(token || localStorage.getItem('token'))
@@ -16,19 +16,8 @@ const Login = () =>
         return <Navigate to='/'/>
     }
 
-    const showAuthWarningMessage = (authType) =>
-    {
-        switch(authType)
-        {
-            case "login":
-                <div>{error.message}</div>
-            break;
-        }
-    }
-
     return (
         <div>
-            { error && <div>{error.message}</div> }
             <Formik
                 initialValues={initialValues}
                 validationSchema={validation}

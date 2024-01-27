@@ -7,6 +7,7 @@ export const validation = Yup.object().shape
 (
     {
         ...loginValidation.fields,
-        name: Yup.string().min(minNameChars, `Name must contain at least ${minNameChars} chars!`),
+        name: Yup.string()
+            .min(minNameChars, `Name must contain at least ${minNameChars} chars!`),
     }
 )

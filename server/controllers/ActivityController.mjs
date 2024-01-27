@@ -20,6 +20,8 @@ const add = async (req, res) =>
     {
         const activity = new Activity(req.body);
 
+        console.log(activity);
+
         await activity.save();
         res.status(200).json(activity);
     }

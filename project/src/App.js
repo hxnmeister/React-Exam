@@ -17,21 +17,20 @@ function App()
   return (
     <>
       <nav>
-        <div className='main-bar'>
           <NavLink to='/'>Home</NavLink>
-          <NavLink to='/create-activity'>Create</NavLink>
-        </div>
 
         {
           token ?
-          <div className='additional-bar'>
+          <div className='auth'>
+            <NavLink to='/create-activity'>Create</NavLink>
             { userData.name }
             <button onClick={ () => dispatch(logout()) }>Logout</button>
-          </div> :
-          <div className='additional-bar'>
+          </div>:
+          <div className='auth'>
             <NavLink to='/login'>Login</NavLink>
             <NavLink to='/signup'>Sign Up</NavLink>
           </div>
+            
         }
       </nav>
 

@@ -18,7 +18,7 @@ export const getAll = createAsyncThunk('getAll', async (_, thunkAPI) =>
     }
 });
 
-export const add = createAsyncThunk('add', async ({ payload }) =>
+export const add = createAsyncThunk('add', async (payload) =>
 {
     try
     {
