@@ -22,7 +22,8 @@ function App()
         {
           token ?
           <div className='auth'>
-            <NavLink to='/create-activity'>Create</NavLink>
+            <NavLink to='/projects'>Projects</NavLink>
+            <NavLink to='/create-activity'>Create Activity</NavLink>
             { userData.name }
             <button onClick={ () => dispatch(logout()) }>Logout</button>
           </div>:

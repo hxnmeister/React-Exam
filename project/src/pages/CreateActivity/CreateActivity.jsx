@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { add } from '../../asyncThunks/activityThunk';
 import ActivityForm from '../../components/ActivityForm/ActivityForm';
 
-const Create = () => 
+const CreateActivity = () => 
 {
     const { userData } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -20,4 +20,4 @@ const Create = () =>
     );
 }
 
-export default Create;
+export default CreateActivity;

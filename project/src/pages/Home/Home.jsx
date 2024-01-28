@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAll } from '../../asyncThunks/activityThunk';
 import Activity from '../../components/Activity/Activity';
 import EditMode from '../../components/EditMode/EditMode';
+import { remove } from '../../asyncThunks/activityThunk';
 
 const Home = () => 
 {
@@ -37,7 +38,20 @@ const Home = () =>
     {
         return (
             <div>
-                { Array.isArray(activities) && activities.map( (activity) => <Activity key={activity._id} activity={activity} handleEnterEditClick={handleEnterEditClick}/> )}
+                { 
+                    Array.isArray(activities) && activities.map((activity) => 
+                    {
+                        return(
+                            <div key={activity._id}>
+                                <Activity activity={activity}/> 
+                                <button type="button" onClick={() => dispatch(remove(activity._id))}>Delete</button>
+                                <button type="button" onClick={() => handleEnterEditClick(activity)}>Edit</button>
+                                <hr style={{marginRight: '80%'}}/>
+                            </div>
+                        )
+                    })
+                
+                }
             </div>
         );
     }

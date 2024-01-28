@@ -13,9 +13,9 @@ export const activitySlice = createSlice
     {
         name: 'activities',
         initialState,
-        extraReducers: (builer) =>
+        extraReducers: (builder) =>
         {
-            builer
+            builder
             .addCase(getAll.pending, (state, action) => 
             {
                 state.loading = true;

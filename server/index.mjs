@@ -4,6 +4,7 @@ import dbConnection from "./db/index.mjs";
 import activityRoutes from "./routes/activities.mjs";
 import userRoutes from "./routes/users.mjs";
 import authRoutes from "./routes/auth.mjs";
+import projectRoutes from "./routes/projects.mjs";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cors());
 app.use('', activityRoutes);
 app.use('', userRoutes);
 app.use('', authRoutes);
+app.use('', projectRoutes);
 
 app.get('/', (req, res) => 
 {

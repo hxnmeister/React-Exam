@@ -1,10 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../api/index";
 import { fetchUserData } from "./authThunk";
+import { getUserId } from "./helpers";
 
-const getUserId = async (thunkAPI) => (await thunkAPI.dispatch(fetchUserData())).payload.id;
-
-export const getAll = createAsyncThunk('getAll', async (_, thunkAPI) => 
+export const getAll = createAsyncThunk('activity/getAll', async (_, thunkAPI) => 
 {
     const userId = await getUserId(thunkAPI);
     
@@ -18,7 +17,7 @@ export const getAll = createAsyncThunk('getAll', async (_, thunkAPI) =>
     }
 });
 
-export const add = createAsyncThunk('add', async (payload) =>
+export const add = createAsyncThunk('activity/add', async (payload) =>
 {
     try
     {
@@ -30,7 +29,7 @@ export const add = createAsyncThunk('add', async (payload) =>
     }
 });
 
-export const remove = createAsyncThunk('remove', async (payload) =>
+export const remove = createAsyncThunk('activity/remove', async (payload) =>
 {
     try
     {

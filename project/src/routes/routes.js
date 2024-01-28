@@ -3,7 +3,8 @@ import App from "../App";
 import Login from "../pages/Login/Login";
 import SignUp from "../pages/SignUp/SignUp";
 import Home from "../pages/Home/Home";
-import Create from "../pages/Create/Create";
+import CreateActivity from "../pages/CreateActivity/CreateActivity";
+import Projects from "../pages/Projects/Projects";
 
 const router = createBrowserRouter
 (
@@ -27,7 +28,11 @@ const router = createBrowserRouter
                 },
                 {
                     path: '/create-activity',
-                    element: <Create/>
+                    element: <CreateActivity/>
+                },
+                {
+                    path: '/projects',
+                    element: <Projects/>
                 }
             ]
         }
