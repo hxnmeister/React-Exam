@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAll } from '../../asyncThunks/projectThunk';
+import { getAll as getAllProjects } from '../../asyncThunks/projectThunk';
+
 import Project from '../../components/Project/Project';
 
 const Projects = () => 
 {
-    const { projects, loading } = useSelector((state) => state.project)
+    const { projects } = useSelector((state) => state.project);
     const dispatch = useDispatch();
 
-    useEffect(() =>
+    useEffect(() => 
     {
-        dispatch(getAll());
-    }, [])
+        dispatch(getAllProjects());
+    }, []);
 
     return (
         <div>

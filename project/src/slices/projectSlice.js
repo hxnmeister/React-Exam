@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getAll } from "../asyncThunks/projectThunk";
+import { getAll, add } from "../asyncThunks/projectThunk";
 
 const initialState = 
 {
@@ -26,6 +26,20 @@ export const projectSlice = createSlice
                 state.projects = action.payload;
             })
             .addCase(getAll.rejected, (state, action) => 
+            {
+                state.loading = false;
+                state.error = 'error';
+            })
+            .addCase(add.pending, (state, action) => 
+            {
+                state.loading = true;
+            })
+            .addCase(add.fulfilled, (state, action) => 
+            {
+                state.loading = false;
+                state.projects = action.payload;
+            })
+            .addCase(add.rejected, (state, action) => 
             {
                 state.loading = false;
                 state.error = 'error';

@@ -15,3 +15,15 @@ export const getAll = createAsyncThunk('projects/getAll', async (_, thunkAPI) =>
         console.log(error);
     }
 });
+
+export const add = createAsyncThunk('projects/add', async (payload) =>
+{
+    try
+    {
+        return (await api.post('/add-to-project', payload)).data;
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
+});

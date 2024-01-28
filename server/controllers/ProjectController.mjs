@@ -48,4 +48,31 @@ const add = async (req, res) =>
     }
 };
 
-export default { getAll, add };
+const addActivity = async (req, res) =>
+{
+    try
+    {
+        console.log(req.body.id, req.body.activityId);
+        res.status(200).json(await Project.findOneAndUpdate
+        (
+            {
+                _id: req.body.id
+            },
+            {
+                $addToSet:
+                {
+                    activities:
+                    {
+                        $each: [req.body.activityId]
+                    }
+                }
+            }
+        ));
+    }
+    catch (error)
+    {
+        res.status(400).json(error);
+    }
+};
+
+export default { getAll, add, addActivity };
