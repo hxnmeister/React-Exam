@@ -16,12 +16,36 @@ export const getAll = createAsyncThunk('projects/getAll', async (_, thunkAPI) =>
     }
 });
 
-export const add = createAsyncThunk('projects/add', async (payload) =>
+export const addToProject = createAsyncThunk('projects/add_to_project', async (payload) =>
 {
     try
     {
         return (await api.post('/add-to-project', payload)).data;
     }
+    catch (error)
+    {
+        console.log(error);
+    }
+});
+
+export const create = createAsyncThunk('projects/create', async (payload) =>
+{
+    try
+    {
+        return (await api.post('/projects', payload)).data;
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
+});
+
+export const remove = createAsyncThunk('projects/remove', async (payload) =>
+{
+    try
+    {
+        return (await api.delete(`/projects/${payload}`)).data;
+    } 
     catch (error)
     {
         console.log(error);

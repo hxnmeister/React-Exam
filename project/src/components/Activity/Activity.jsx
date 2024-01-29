@@ -1,8 +1,12 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import styles from './style.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { searchByTag } from '../../asyncThunks/activityThunk';
 
 const Activity = ({ activity }) => 
 {
+    const { userData } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
 
     return (
         <div>
@@ -14,7 +18,7 @@ const Activity = ({ activity }) =>
             <br />
             <span>Priority: {activity.priority}</span>
             <br />
-            <span>Tags: {activity.tags.map((tag, index) => <span key={index}>{tag} </span>)}</span>
+            <div className={styles.tags}>Tags: {activity.tags.map((tag, index) => <span key={index}><a onClick={() => dispatch(searchByTag({userId: userData._id, searchingTag: tag}))}>{tag}</a></span>)}</div>
             <br />
         </div>
     );

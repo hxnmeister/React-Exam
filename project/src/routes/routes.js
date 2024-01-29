@@ -5,6 +5,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import Home from "../pages/Home/Home";
 import CreateActivity from "../pages/CreateActivity/CreateActivity";
 import Projects from "../pages/Projects/Projects";
+import CreateProject from "../pages/CreateProject/CreateProject";
 
 const router = createBrowserRouter
 (
@@ -33,6 +34,10 @@ const router = createBrowserRouter
                 {
                     path: '/projects',
                     element: <Projects/>
+                },
+                {
+                    path: '/create-project',
+                    element: <CreateProject/>
                 }
             ]
         }

@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getAll, add, remove, update } from "../asyncThunks/activityThunk";
+import { getAll, add, remove, update, searchByTag } from "../asyncThunks/activityThunk";
 
 const initialState = 
 {
     activities: [],
+    tagSearchResults: [],
     loading: false,
     error: null
 };
@@ -68,6 +69,20 @@ export const activitySlice = createSlice
                 state.activities = action.payload;
             })
             .addCase(update.rejected, (state, action) => 
+            {
+                state.loading = false;
+                state.error = 'error';
+            })
+            .addCase(searchByTag.pending, (state) => 
+            {
+                state.loading = true;
+            })
+            .addCase(searchByTag.fulfilled, (state, action) => 
+            {
+                state.loading = false;
+                state.tagSearchResults = action.payload;
+            })
+            .addCase(searchByTag.rejected, (state) => 
             {
                 state.loading = false;
                 state.error = 'error';

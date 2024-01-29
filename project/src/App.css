@@ -37,7 +37,16 @@
   }
 }
 
-
+form
+{
+  display: grid;
+  grid-template-columns: 200px;
+  justify-content: center;
+}
+form input
+{
+  margin-bottom: 10px;
+}
 nav
 {
   width: 100%;

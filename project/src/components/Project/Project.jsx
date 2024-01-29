@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import Activity from '../Activity/Activity';
 import { initialValues } from './form/initValues';
 import { Field, Form, Formik } from 'formik';
-import { add, getAll as getAllProjects } from '../../asyncThunks/projectThunk';
+import { addToProject, getAll as getAllProjects, remove } from '../../asyncThunks/projectThunk';
 import { getAll as getAllActivities } from '../../asyncThunks/activityThunk'; 
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const Project = ({ project }) => 
 {
@@ -13,12 +14,17 @@ const Project = ({ project }) =>
 
     useEffect(() =>
     {
-        if(activities.length === 0) dispatch(getAllActivities());
-    }, [])
+        activities.length === 0 && dispatch(getAllActivities());
+    }, [dispatch])
 
     const submitHandler = (values) =>
     {
-        Object.keys(values).length !== 0 && dispatch(add({id: project._id, activityId: values.activityId}));
+        Object.keys(values).length !== 0 && dispatch(addToProject({id: project._id, activityId: values.activityId}));
+    };
+
+    const deleteHandler = (projectId) =>
+    {
+        dispatch(remove(projectId));
     };
 
     return (
@@ -49,6 +55,7 @@ const Project = ({ project }) =>
                     </Field>
                             
                     <button type="submit">Add Activity</button>
+                    <button type="button" onClick={() => deleteHandler(project._id)}>Delete Project</button>
                 </Form>
             </Formik>
         </div>

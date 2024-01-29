@@ -7,6 +7,7 @@ router.get('/activities/:id', ActivityController.getAll);
 // router.get('/activities', ActivityController.getAll);
 
 router.post('/activities', ActivityController.add);
+router.post('/search-by-tag', ActivityController.searchByTag);
 
 router.delete('/activities/:id', ActivityController.remove);
 

@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './App.css';
 import { useEffect } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Navigate, Outlet } from 'react-router-dom';
 import { fetchUserData, logout } from './asyncThunks/authThunk';
 
 function App() 
@@ -12,7 +12,12 @@ function App()
   useEffect(() => 
   {
     dispatch(fetchUserData());
-  }, []);
+  }, [dispatch, token]);
+
+  const handleSubmit = () =>
+  {
+    dispatch(logout());
+  };
 
   return (
     <>
@@ -24,8 +29,9 @@ function App()
           <div className='auth'>
             <NavLink to='/projects'>Projects</NavLink>
             <NavLink to='/create-activity'>Create Activity</NavLink>
+            <NavLink to='/create-project'>Create Project</NavLink>
             { userData.name }
-            <button onClick={ () => dispatch(logout()) }>Logout</button>
+            <button onClick={ handleSubmit }>Logout</button>
           </div>:
           <div className='auth'>
             <NavLink to='/login'>Login</NavLink>

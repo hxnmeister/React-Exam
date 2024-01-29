@@ -1,6 +1,7 @@
 import React from 'react';
 import { validation } from './validationSchema';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
+import styles from './style.module.css';
 
 const ActivityForm = ({ handleSubmit, initialValues }) => 
 {
@@ -32,28 +33,30 @@ const ActivityForm = ({ handleSubmit, initialValues }) =>
                             <Field type="datetime-local" name="deadline" id="deadline"/>
                             <ErrorMessage component="div" name="deadline"/>
                         
-                            <label htmlFor="tags">Tags:</label>
-                            <FieldArray name="tags">
-                                {
-                                    (arrayHelpers) =>
-                                    (
-                                        <div>
-                                            {arrayHelpers.form.values.tags.map((tag, index) =>
-                                                (
-                                                    <div key={index}>
-                                                        <Field type="text" name={`tags[${index}]`} placeholder={`#tag${index + 1}`}/>
-                                                        <ErrorMessage component="div" name={`tags[${index}]`}/>
-                                                        
-                                                        <button type="button" onClick={ () => arrayHelpers.form.values.tags.length > 1 && arrayHelpers.remove(index) }>Remove</button>
-                                                        <button type="button" onClick={ () => arrayHelpers.push(`#tag${arrayHelpers.form.values.tags.length + 1}`) }>Add</button>
-                                                    </div>
-                                                ))
-                                            }
-                                        </div>
-                                    )
-                                }
-                            </FieldArray>
-                            <ErrorMessage component="div" name="tag"/>
+                            <div className={styles.tags}>
+                                <label htmlFor="tags">Tags:</label>
+                                <FieldArray name="tags">
+                                    {
+                                        (arrayHelpers) =>
+                                        (
+                                            <div>
+                                                {arrayHelpers.form.values.tags.map((tag, index) =>
+                                                    (
+                                                        <div key={index}>
+                                                            <Field type="text" name={`tags[${index}]`} placeholder={`#tag${index + 1}`}/>
+                                                            <ErrorMessage component="div" name={`tags[${index}]`}/>
+                                                            
+                                                            <button type="button" onClick={ () => arrayHelpers.form.values.tags.length > 1 && arrayHelpers.remove(index) }>Remove</button>
+                                                            <button type="button" onClick={ () => arrayHelpers.push(`#tag${arrayHelpers.form.values.tags.length + 1}`) }>Add</button>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </div>
+                                        )
+                                    }
+                                </FieldArray>
+                                <ErrorMessage component="div" name="tag"/>
+                            </div>
 
                             <button type="submit" disabled={isSubmitting || !isValid}>Submit</button>
                             <button type="reset">Reset</button>

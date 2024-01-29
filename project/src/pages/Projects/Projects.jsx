@@ -12,7 +12,7 @@ const Projects = () =>
     useEffect(() => 
     {
         dispatch(getAllProjects());
-    }, []);
+    }, [dispatch]);
 
     return (
         <div>

@@ -1,31 +1,34 @@
 import mongoose from "mongoose";
-import User from "../models/User.mjs";
-import Activity from "../models/Activity.mjs";
 import Project from "../models/Project.mjs";
+
+const fetchProjectsByUserId = async (userId) =>
+{
+    return await Project.aggregate(
+        [
+            {
+                $match: 
+                {
+                    user: new mongoose.Types.ObjectId(userId)
+                }
+            },
+            {
+                $lookup: 
+                {
+                    from: 'activities',
+                    localField: 'activities',
+                    foreignField: '_id',
+                    as: 'activities_list'
+                }
+            }
+        ]
+    );
+};
 
 const getAll = async (req, res) =>
 {
     try
     {
-        res.status(200).json(await Project.aggregate(
-            [
-                {
-                    $match: 
-                    {
-                        user: new mongoose.Types.ObjectId(req.params.id)
-                    }
-                },
-                {
-                    $lookup: 
-                    {
-                        from: 'activities',
-                        localField: 'activities',
-                        foreignField: '_id',
-                        as: 'activities_list'
-                    }
-                }
-            ]
-        ));
+        res.status(200).json(await fetchProjectsByUserId(req.params.id));
     }
     catch (error)
     {
@@ -52,8 +55,7 @@ const addActivity = async (req, res) =>
 {
     try
     {
-        console.log(req.body.id, req.body.activityId);
-        res.status(200).json(await Project.findOneAndUpdate
+        await Project.findOneAndUpdate
         (
             {
                 _id: req.body.id
@@ -66,7 +68,30 @@ const addActivity = async (req, res) =>
                         $each: [req.body.activityId]
                     }
                 }
+            },
+            {
+                new: true
             }
+        );
+
+        res.status(200).json(await Project.aggregate(
+            [
+                {
+                    $match: 
+                    {
+                        _id: new mongoose.Types.ObjectId(req.body.id)
+                    }
+                },
+                {
+                    $lookup: 
+                    {
+                        from: 'activities',
+                        localField: 'activities',
+                        foreignField: '_id',
+                        as: 'activities_list'
+                    }
+                }
+            ]
         ));
     }
     catch (error)
@@ -75,4 +100,24 @@ const addActivity = async (req, res) =>
     }
 };
 
-export default { getAll, add, addActivity };
+const remove = async (req, res) =>
+{
+    try
+    {
+        const project = await Project.findOne(new mongoose.Types.ObjectId(req.params.id));
+
+        if(project)
+        {
+            const userId = project.user;
+
+            await project.deleteOne();
+            res.status(200).json(await fetchProjectsByUserId(userId));
+        }
+    }
+    catch (error)
+    {
+        console.log(error);
+    }
+};
+
+export default { getAll, add, addActivity, remove };

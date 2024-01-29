@@ -12,6 +12,11 @@ const Home = () =>
     const [isEditing, setIsEditing] = useState(false);
     const [selectedActivity, setSelectedActivity] = useState(null);
 
+    useEffect(() =>
+    {
+        dispatch(getAll());
+    }, []);
+
     const handleEnterEditClick = (activity) =>
     {
         setSelectedActivity(activity);
@@ -23,11 +28,6 @@ const Home = () =>
         setSelectedActivity(null);
         setIsEditing(false);
     };
-
-    useEffect(() =>
-    {
-        dispatch(getAll());
-    }, []);
 
     if(loading)
     {
