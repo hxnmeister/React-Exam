@@ -83,35 +83,7 @@ const searchByTag = async (req, res) =>
 {
     try
     {
-        const temp = await Activity.aggregate(
-            [
-                {
-                    $match: 
-                    {
-                        user: new mongoose.Types.ObjectId(req.body.userId),
-                        tags: 
-                        {
-                            $elemMatch: 
-                            {
-                                $eq: req.body.searchingTag
-                            }
-                        }
-                    }
-                },
-                {
-                    $lookup: 
-                    {
-                        from: 'activities',
-                        localField: 'activities',
-                        foreignField: '_id',
-                        as: 'activities_list'
-                    }
-                }
-            ]
-        )
-
-        console.log(temp);
-        res.status(200).json(temp);
+        res.status(200).json(await Activity.find({user: new mongoose.Types.ObjectId(req.body.userId), tags: {$elemMatch: {$eq: req.body.searchingTag}}}));
     }
     catch (error)
     {

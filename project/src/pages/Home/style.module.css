@@ -1,0 +1,9 @@
+.activitiesContainer
+{
+    display: flex;
+    flex-direction: column;
+}
+.searchBar
+{
+    align-self: center;
+}

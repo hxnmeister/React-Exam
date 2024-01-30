@@ -6,6 +6,7 @@ import Home from "../pages/Home/Home";
 import CreateActivity from "../pages/CreateActivity/CreateActivity";
 import Projects from "../pages/Projects/Projects";
 import CreateProject from "../pages/CreateProject/CreateProject";
+import SearchResults from "../pages/SearchResults/SearchResults";
 
 const router = createBrowserRouter
 (
@@ -38,6 +39,10 @@ const router = createBrowserRouter
                 {
                     path: '/create-project',
                     element: <CreateProject/>
+                },
+                {
+                    path: '/search-results/',
+                    element: <SearchResults/>
                 }
             ]
         }

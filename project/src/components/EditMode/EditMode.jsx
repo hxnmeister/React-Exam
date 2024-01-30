@@ -17,6 +17,7 @@ const EditMode = ({ selectedActivity, handleExitEdit }) =>
     return (
         <div>
             <ActivityForm handleSubmit={handleSubmit} initialValues={{...selectedActivity, deadline: new Date(selectedActivity.deadline).toISOString().substring(0, 16)}}/>
+            <button type="button" onClick={handleExitEdit}>Exit Edit Mode</button>
         </div>
     );
 }

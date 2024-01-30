@@ -37,10 +37,8 @@ function App()
             <NavLink to='/login'>Login</NavLink>
             <NavLink to='/signup'>Sign Up</NavLink>
           </div>
-            
         }
       </nav>
-
       <Outlet/>
     </>
   );

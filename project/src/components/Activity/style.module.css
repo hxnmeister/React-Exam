@@ -1,4 +1,6 @@
 .tags a
 {
     margin-right: 8px;
+    text-decoration: underline;
+    cursor: pointer;
 }

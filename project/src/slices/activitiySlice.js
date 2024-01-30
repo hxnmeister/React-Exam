@@ -14,6 +14,13 @@ export const activitySlice = createSlice
     {
         name: 'activities',
         initialState,
+        reducers:
+        {
+            clearSearchResults: (state) =>
+            {
+                state.tagSearchResults = [];
+            }
+        },
         extraReducers: (builder) =>
         {
             builder
@@ -91,4 +98,5 @@ export const activitySlice = createSlice
     }
 );
 
+export const { clearSearchResults } = activitySlice.actions;
 export default activitySlice.reducer;

@@ -56,7 +56,7 @@ export const searchByTag = createAsyncThunk('activities/search_by_tag', async (p
 {
     try
     {
-        console.log((await api.post('search-by-tag', payload)).data);
+        return (await api.post('search-by-tag', payload)).data;
     }
     catch (error)
     {
