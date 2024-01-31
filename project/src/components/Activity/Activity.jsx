@@ -20,7 +20,7 @@ const Activity = ({ activity, searchText }) =>
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className={styles.activity}>
             <span>Title: {highlightSearchText(activity.title, searchText)}</span>
             <br />
             <span>Deadline:  {new Date(activity.deadline).toLocaleString()}</span>
@@ -28,9 +28,7 @@ const Activity = ({ activity, searchText }) =>
             <span>Description: {highlightSearchText(activity.description, searchText)}</span>
             <br />
             <span>Priority: {activity.priority}</span>
-            <br />
             <div className={styles.tags}>Tags: {activity.tags.map((tag, index) => <span key={index}><a onClick={() => navigate(`/search-by-tag/${tag.replace("#", "")}`)}>{highlightSearchText(tag, searchText)}</a></span>)}</div>
-            <br />
         </div>
     );
 }

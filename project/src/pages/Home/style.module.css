@@ -1,13 +1,47 @@
-.searchingPanel, .activitiesContainer
+.searchingPanel, .container
 {
     display: flex;
 }
-.activitiesContainer
+.container
 {
     flex-direction: column;
+}
+.searchingPanel, .activitiesContainer
+{
+    margin-top: 20px;
 }
 .searchingPanel
 {
     justify-content: center;
     gap: 8px;
+}
+.activitiesContainer
+{
+    display: grid;
+    grid-template-columns: 250px 250px 250px;
+    justify-content: center;
+}
+.homeActivities
+{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+.homeActivities button
+{
+    width: 50%;
+    align-self: center;
+    margin-top: 10px;
+    border: none;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: black;
+    color: rgb(248, 234, 207);
+    cursor: pointer;
+
+    transition: box-shadow 0.3s ease-in-out;
+}
+.homeActivities button:hover
+{
+    box-shadow: 3px 3px 5px grey;
 }

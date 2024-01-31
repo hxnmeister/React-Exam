@@ -59,6 +59,7 @@ export const activitySlice = createSlice
             .addCase(remove.fulfilled, (state, action) => 
             {
                 state.loading = false;
+                console.log(action);
                 state.activities = action.payload;
             })
             .addCase(remove.rejected, (state, action) => 

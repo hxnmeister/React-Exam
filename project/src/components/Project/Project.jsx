@@ -1,11 +1,12 @@
+import styles from './style.module.css';
+import homeStyles from '../../pages/Home/style.module.css'
 import React, { useEffect } from 'react';
 import Activity from '../Activity/Activity';
 import { initialValues } from './form/initValues';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { addToProject, getAll as getAllProjects, remove } from '../../asyncThunks/projectThunk';
+import { addToProject, remove } from '../../asyncThunks/projectThunk';
 import { getAll as getAllActivities } from '../../asyncThunks/activityThunk'; 
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import { validate } from './form/validationSchema';
 
 const Project = ({ project }) => 
@@ -32,15 +33,14 @@ const Project = ({ project }) =>
 
     return (
         <div>
-            <div>{project.title}:</div>
-            <div>
+            <h2>{project.title}:</h2>
+            <div className={homeStyles.activitiesContainer}>
                 {
                     project.activities_list.map((activity) => 
                     {
                         return(
                             <div key={activity._id}>
                                 <Activity activity={activity}/>
-                                <hr style={{marginRight: '80%'}}/>
                             </div>
                         );
                     })
@@ -53,7 +53,7 @@ const Project = ({ project }) =>
                 validateOnChange
                 onSubmit={submitHandler}
             >
-                <Form>
+                <Form className={styles.projectControlls}>
                     <label htmlFor="activityId">Choose an activity:</label>
                     <Field as="select" id="activityId" name="activityId">
                         <option value="" defaultValue>Select option...</option>

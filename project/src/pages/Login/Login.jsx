@@ -1,20 +1,31 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { login } from '../../asyncThunks/authThunk';
 import { initialValues } from './form/initValues';
 import { validation } from './form/validationSchema';
+import { clearError } from '../../slices/authSlice';
 
 const Login = () => 
 {
-    const { token } = useSelector( (state) => state.auth );
+    const { token, error } = useSelector( (state) => state.auth );
     const dispatch = useDispatch();
+
+    useEffect(() => 
+    {
+        error && dispatch(clearError());
+    }, []);
 
     if(token || localStorage.getItem('token'))
     {
         return <Navigate to='/'/>
     }
+    
+    const submitHandler = (values) =>
+    {
+        dispatch(login({email: values.email, password: values.password}));
+    };
 
     return (
         <div>
@@ -22,7 +33,7 @@ const Login = () =>
                 initialValues={initialValues}
                 validationSchema={validation}
                 validateOnChange
-                onSubmit={(values) => dispatch(login({email: values.email, password: values.password}))}
+                onSubmit={submitHandler}
             >
                 {
                     ({ isSubmitting, isValid }) =>
@@ -40,11 +51,17 @@ const Login = () =>
                             <Field type="password" name="repeatPassword" placeholder={initialValues.repeatPassword}/>
                             <ErrorMessage component="div" name="repeatPassword"/>
 
-                            <button type='submit' disabled={isSubmitting || !isValid}>Login</button>
+                            <button type='submit' disabled={!isValid}>Login</button>
                         </Form>
                     )
                 }
             </Formik>
+
+            <div>
+                {
+                    error && error.message
+                }
+            </div>
         </div>
     );
 }

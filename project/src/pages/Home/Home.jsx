@@ -1,20 +1,20 @@
+import styles from './style.module.css';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAll } from '../../asyncThunks/activityThunk';
 import Activity from '../../components/Activity/Activity';
 import EditMode from '../../components/EditMode/EditMode';
 import { remove } from '../../asyncThunks/activityThunk';
-import styles from './style.module.css';
 
 const Home = () => 
 {
     const { activities, loading } = useSelector((state) => state.activity);
     const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    const [isEditing, setIsEditing] = useState(false);
-    const [selectedActivity, setSelectedActivity] = useState(null);
     const [searchText, setSearchText] = useState('');
-    const [searchPriority, setSearchPriority] = useState();
+    const [isEditing, setIsEditing] = useState(false);
+    const [searchPriority, setSearchPriority] = useState('');
+    const [selectedActivity, setSelectedActivity] = useState(null);
 
     useEffect(() =>
     {
@@ -41,19 +41,8 @@ const Home = () =>
     {
         if(!isEditing)
         {
-            const filteredActivities = activities.filter((activity) =>
-            {
-                const textRegex = new RegExp(searchText, 'i');
-                const priorityRegex = new RegExp(searchPriority, 'i');
-    
-                return (
-                    (searchText === '' || textRegex.test(activity.title) || textRegex.test(activity.description) || activity.tags.some(tag => textRegex.test(tag))) &&
-                    (searchPriority === '' || priorityRegex.test(activity.priority.toString()))
-                    );
-            });
-    
             return (
-                <div className={styles.activitiesContainer}>
+                <div className={styles.container}>
                     <div className={styles.searchingPanel}>
                         <input 
                             type="text" 
@@ -70,16 +59,24 @@ const Home = () =>
                             className={styles.searchBar}
                         />
                     </div>
-                    <div>
+                    <div className={styles.activitiesContainer}>
                         { 
-                            Array.isArray(activities) && filteredActivities.map((activity) => 
+                            Array.isArray(activities) && activities.filter((activity) =>
+                            {
+                                const textRegex = new RegExp(searchText, 'i');
+                                const priorityRegex = new RegExp(searchPriority, 'i');
+                    
+                                return (
+                                    (searchText === '' || textRegex.test(activity.title) || textRegex.test(activity.description) || activity.tags.some(tag => textRegex.test(tag))) &&
+                                    (searchPriority === '' || priorityRegex.test(activity.priority.toString()))
+                                    );
+                            }).map((activity) => 
                             {
                                 return(
-                                    <div key={activity._id}>
+                                    <div className={styles.homeActivities} key={activity._id}>
                                         <Activity activity={activity} searchText={searchText}/> 
                                         <button type="button" onClick={() => dispatch(remove(activity._id))}>Delete</button>
                                         <button type="button" onClick={() => handleEnterEditClick(activity)}>Edit</button>
-                                        <hr style={{marginRight: '80%'}}/>
                                     </div>
                                 )
                             })

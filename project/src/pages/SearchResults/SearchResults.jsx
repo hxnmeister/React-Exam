@@ -6,7 +6,7 @@ import { searchByTag } from '../../asyncThunks/activityThunk';
 
 const SearchResults = () => {
     const { tagSearchResults } = useSelector((state) => state.activity);
-    const { userData } = useSelector((state) => state.auth);
+    const { userData, token } = useSelector((state) => state.auth);
     const { tag } = useParams();
     const dispatch = useDispatch();
     
@@ -15,12 +15,15 @@ const SearchResults = () => {
         dispatch(searchByTag({userId: userData, searchingTag: `#${tag}`}))
     }, []);
 
-    return (
-        <div>
-            <h1>Searching results for "{tag}":</h1>
-            {tagSearchResults.map((activity) => <Activity key={activity._id} activity={activity}/>)}       
-        </div>
-    );
+    if(token)
+    {
+        return (
+            <div>
+                <h1>Searching results for "{tag}":</h1>
+                {tagSearchResults.map((activity) => <Activity key={activity._id} activity={activity}/>)}       
+            </div>
+        );
+    }
 }
 
 export default SearchResults;

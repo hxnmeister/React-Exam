@@ -33,16 +33,17 @@ const remove = async (req, res) =>
 {
     try
     {
-        await Activity.findByIdAndDelete(req.params.id).exec();
-        res.status(200).json
-        (
-            {
-                status: "success",
-                message: "activity deleted!"
-            }
-        );
+        const activity = await Activity.findOne(new mongoose.Types.ObjectId(req.params.id));
+
+        if(activity)
+        {
+            const userId = activity.user;
+
+            await activity.deleteOne();
+            res.status(200).json(await Activity.find({user: userId}));
+        }
     }
-    catch
+    catch (error)
     {
         res.status(400).json
         (

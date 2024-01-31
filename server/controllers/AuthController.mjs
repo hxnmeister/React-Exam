@@ -56,8 +56,9 @@ const login = async (req, res) =>
         return res.status(400).json
         (
             {
+                authType: "login",
                 status: "error",
-                message: "invalid password!"
+                message: "no user with such credentials!"
             }
         );
     }

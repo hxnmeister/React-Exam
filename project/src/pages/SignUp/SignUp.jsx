@@ -14,12 +14,8 @@ const SignUp = () =>
 
     useEffect(() => 
     {
-        if(error)
-        {
-            alert(error.message);
-            dispatch(clearError());
-        }
-    },[error])
+        error && dispatch(clearError());
+    },[])
 
     if(token || localStorage.getItem('token'))
     {
@@ -60,11 +56,13 @@ const SignUp = () =>
                             <Field type="password" name="repeatPassword" placeholder={initialValues.repeatPassword}/>
                             <ErrorMessage component="div" name="repeatPassword"/>
 
-                            <button type="submit" disabled={isSubmitting || !isValid}>Sign Up</button>
+                            <button type="submit" disabled={!isValid}>Sign Up</button>
                         </Form>
                     )
                 }
             </Formik>
+
+            <div> {error && error.message}</div>
         </div>
     );
 }

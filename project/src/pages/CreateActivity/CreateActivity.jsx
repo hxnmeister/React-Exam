@@ -6,7 +6,7 @@ import ActivityForm from '../../components/ActivityForm/ActivityForm';
 
 const CreateActivity = () => 
 {
-    const { userData } = useSelector((state) => state.auth);
+    const { userData, token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     const handleSubmit = (values, {resetForm}) =>
@@ -15,9 +15,12 @@ const CreateActivity = () =>
         resetForm();
     };
 
-    return (
-        <ActivityForm handleSubmit={handleSubmit} initialValues={initialValues}/>
-    );
+    if(token)
+    {
+        return (
+            <ActivityForm handleSubmit={handleSubmit} initialValues={initialValues}/>
+        );
+    }
 }
 
 export default CreateActivity;

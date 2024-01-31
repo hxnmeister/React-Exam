@@ -1,0 +1,32 @@
+.projectControlls
+{
+    width: 50%;
+    margin: 0 auto;
+    background-color: rgb(240, 201, 124);
+    border: 1px solid black;
+    border-radius: 15px;
+}
+.projectControlls select, button
+{
+    margin-bottom: 10px;
+}
+.projectControlls select
+{
+    padding: 5px;
+    border-radius: 20px;
+}
+.projectControlls button
+{
+    border: none;
+    border-radius: 20px;
+    padding: 5px;
+    background-color: black;
+    color: rgb(248, 234, 207);
+    cursor: pointer;
+
+    transition: box-shadow 0.3s ease-in-out;
+}
+.projectControlls button:hover
+{
+    box-shadow: 3px 3px 4px grey;
+}

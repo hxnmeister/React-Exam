@@ -1,13 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../api/index";
 
-export const login = createAsyncThunk('login', async (payload) =>
+export const login = createAsyncThunk('login', async (payload, { rejectWithValue }) =>
 {
-    const responseData = (await api.post('/login', payload)).data;
-    localStorage.setItem('token', responseData.token);
+    try
+    {
+        const responseData = (await api.post('/login', payload)).data;
+        localStorage.setItem('token', responseData.token);
     
-
-    return responseData;
+        return responseData;
+    }
+    catch (error)
+    {
+        return rejectWithValue(error.response.data);
+    }
 });
 
 export const registration = createAsyncThunk('registration', async (payload, thunkAPI) => 

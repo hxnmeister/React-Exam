@@ -7,6 +7,7 @@ import Project from '../../components/Project/Project';
 const Projects = () => 
 {
     const { projects } = useSelector((state) => state.project);
+    const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => 
@@ -14,12 +15,15 @@ const Projects = () =>
         dispatch(getAllProjects());
     }, [dispatch]);
 
-    return (
-        <div>
-            <h1>All available projects</h1>
-            {Array.isArray(projects) && projects.map((project) => <Project key={project._id} project={project}/>)}
-        </div>
-    );
+    if(token)
+    {
+        return (
+            <div>
+                <h1>All available projects</h1>
+                {Array.isArray(projects) && projects.map((project) => <Project key={project._id} project={project}/>)}
+            </div>
+        );
+    }
 }
 
 export default Projects;
