@@ -1,41 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearSearchResults } from '../../slices/activitiySlice';
 import Activity from '../../components/Activity/Activity';
-import { Navigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { searchByTag } from '../../asyncThunks/activityThunk';
 
 const SearchResults = () => {
-    const { tagSearchResults, loading } = useSelector((state) => state.activity);
-    const [activities, setActivities] = useState(tagSearchResults);
+    const { tagSearchResults } = useSelector((state) => state.activity);
+    const { userData } = useSelector((state) => state.auth);
+    const { tag } = useParams();
     const dispatch = useDispatch();
-
+    
     useEffect(() => 
     {
-        dispatch(clearSearchResults());
+        dispatch(searchByTag({userId: userData, searchingTag: `#${tag}`}))
     }, []);
-
-    if(activities.length === 0)
-    {
-        return <Navigate to='/'/>
-    }
 
     return (
         <div>
-            <h1>Searching results:</h1>
-            {activities.map((activity) => 
-                (
-                    <div key={activity._id}>
-                        <span>Title: {activity.title}</span>
-                        <br />
-                        <span>Deadline: {new Date(activity.deadline).toLocaleString()}</span>
-                        <br />
-                        <span>Description: {activity.description}</span>
-                        <br />
-                        <span>Priority: {activity.priority}</span>
-                        <hr />  
-                    </div>
-                ))
-            }       
+            <h1>Searching results for "{tag}":</h1>
+            {tagSearchResults.map((activity) => <Activity key={activity._id} activity={activity}/>)}       
         </div>
     );
 }

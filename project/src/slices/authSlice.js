@@ -69,6 +69,11 @@ export const authSlice = createSlice
                 state.loading = false;
                 state.error = "error";
             })
+            .addCase(logout.fulfilled, (state, action) => {
+                state.userData = {};
+                state.token = null;
+                state.loading = 'succeeded';
+            });
         }
     }
 );

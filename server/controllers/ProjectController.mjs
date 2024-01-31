@@ -79,7 +79,7 @@ const addActivity = async (req, res) =>
                 {
                     $match: 
                     {
-                        _id: new mongoose.Types.ObjectId(req.body.id)
+                        user: new mongoose.Types.ObjectId(req.body.userId)
                     }
                 },
                 {

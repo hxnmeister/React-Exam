@@ -1,9 +1,13 @@
-.activitiesContainer
+.searchingPanel, .activitiesContainer
 {
     display: flex;
+}
+.activitiesContainer
+{
     flex-direction: column;
 }
-.searchBar
+.searchingPanel
 {
-    align-self: center;
+    justify-content: center;
+    gap: 8px;
 }

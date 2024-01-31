@@ -7,6 +7,7 @@ import CreateActivity from "../pages/CreateActivity/CreateActivity";
 import Projects from "../pages/Projects/Projects";
 import CreateProject from "../pages/CreateProject/CreateProject";
 import SearchResults from "../pages/SearchResults/SearchResults";
+import CreateActivityList from "../pages/CreateActivityList/CreateActivityList";
 
 const router = createBrowserRouter
 (
@@ -41,8 +42,12 @@ const router = createBrowserRouter
                     element: <CreateProject/>
                 },
                 {
-                    path: '/search-results/',
+                    path: '/search-by-tag/:tag',
                     element: <SearchResults/>
+                },
+                {
+                    path: 'create-activities-list',
+                    element: <CreateActivityList/>
                 }
             ]
         }

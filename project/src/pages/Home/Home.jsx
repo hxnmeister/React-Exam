@@ -4,12 +4,12 @@ import { getAll } from '../../asyncThunks/activityThunk';
 import Activity from '../../components/Activity/Activity';
 import EditMode from '../../components/EditMode/EditMode';
 import { remove } from '../../asyncThunks/activityThunk';
-import { Navigate } from 'react-router-dom';
 import styles from './style.module.css';
 
 const Home = () => 
 {
     const { activities, loading } = useSelector((state) => state.activity);
+    const { token } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const [isEditing, setIsEditing] = useState(false);
     const [selectedActivity, setSelectedActivity] = useState(null);
@@ -37,61 +37,65 @@ const Home = () =>
     {
         return <h1>Loading...</h1>
     }
-
-    const filteredActivities = activities.filter((activity) =>
+    else if(token)
     {
-        const textRegex = new RegExp(searchText, 'i');
-        const priorityRegex = new RegExp(searchPriority, 'i');
-
-        return (
-            (searchText === '' || textRegex.test(activity.title) || textRegex.test(activity.description) || activity.tags.some(tag => textRegex.test(tag))) &&
-            (searchPriority === '' || priorityRegex.test(activity.priority.toString()))
-            );
-    });
-
-    if(!isEditing)
-    {
-        return (
-            <div className={styles.activitiesContainer}>
-                <input 
-                    type="text" 
-                    placeholder="Search..." 
-                    value={searchText} 
-                    onChange={(e) => setSearchText(e.target.value)}
-                    className={styles.searchBar}
-                />
-                <input 
-                    type="text"
-                    placeholder="Search by priority..."
-                    value={searchPriority}
-                    onChange={(e) => setSearchPriority(e.target.value)}
-                    className={styles.searchBar}
-                />
-                <div>
-                    { 
-                        Array.isArray(activities) && filteredActivities.map((activity) => 
-                        {
-                            return(
-                                <div key={activity._id}>
-                                    <Activity activity={activity} searchText={searchText}/> 
-                                    <button type="button" onClick={() => dispatch(remove(activity._id))}>Delete</button>
-                                    <button type="button" onClick={() => handleEnterEditClick(activity)}>Edit</button>
-                                    <hr style={{marginRight: '80%'}}/>
-                                </div>
-                            )
-                        })
-                    }
+        if(!isEditing)
+        {
+            const filteredActivities = activities.filter((activity) =>
+            {
+                const textRegex = new RegExp(searchText, 'i');
+                const priorityRegex = new RegExp(searchPriority, 'i');
+    
+                return (
+                    (searchText === '' || textRegex.test(activity.title) || textRegex.test(activity.description) || activity.tags.some(tag => textRegex.test(tag))) &&
+                    (searchPriority === '' || priorityRegex.test(activity.priority.toString()))
+                    );
+            });
+    
+            return (
+                <div className={styles.activitiesContainer}>
+                    <div className={styles.searchingPanel}>
+                        <input 
+                            type="text" 
+                            placeholder="Search..." 
+                            value={searchText} 
+                            onChange={(e) => setSearchText(e.target.value)}
+                            className={styles.searchBar}
+                        />
+                        <input 
+                            type="text"
+                            placeholder="Search by priority..."
+                            value={searchPriority}
+                            onChange={(e) => setSearchPriority(e.target.value)}
+                            className={styles.searchBar}
+                        />
+                    </div>
+                    <div>
+                        { 
+                            Array.isArray(activities) && filteredActivities.map((activity) => 
+                            {
+                                return(
+                                    <div key={activity._id}>
+                                        <Activity activity={activity} searchText={searchText}/> 
+                                        <button type="button" onClick={() => dispatch(remove(activity._id))}>Delete</button>
+                                        <button type="button" onClick={() => handleEnterEditClick(activity)}>Edit</button>
+                                        <hr style={{marginRight: '80%'}}/>
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
-        );
-    }
-    else
-    {
-        return(
-            <div>
-                <EditMode selectedActivity={selectedActivity} handleExitEdit={handleExitEdit}/>
-            </div>
-        );
+            );
+        }
+        else
+        {
+            return(
+                <div>
+                    <EditMode selectedActivity={selectedActivity} handleExitEdit={handleExitEdit}/>
+                </div>
+            );
+        }
     }
 }
 

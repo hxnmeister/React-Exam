@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './style.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { searchByTag } from '../../asyncThunks/activityThunk';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 const highlightSearchText = (text, searchText) => 
 {
@@ -19,14 +17,7 @@ const highlightSearchText = (text, searchText) =>
 
 const Activity = ({ activity, searchText }) => 
 {
-    const { userData } = useSelector((state) => state.auth);
-    const { tagSearchResults } = useSelector((state) => state.activity);
-    const dispatch = useDispatch();
-
-    if(tagSearchResults.length !== 0)
-    {
-        return <Navigate to='/search-results'/>
-    }
+    const navigate = useNavigate();
 
     return (
         <div>
@@ -38,7 +29,7 @@ const Activity = ({ activity, searchText }) =>
             <br />
             <span>Priority: {activity.priority}</span>
             <br />
-            <div className={styles.tags}>Tags: {activity.tags.map((tag, index) => <span key={index}><a onClick={() => dispatch(searchByTag({userId: userData, searchingTag: tag}))}>{highlightSearchText(tag, searchText)}</a></span>)}</div>
+            <div className={styles.tags}>Tags: {activity.tags.map((tag, index) => <span key={index}><a onClick={() => navigate(`/search-by-tag/${tag.replace("#", "")}`)}>{highlightSearchText(tag, searchText)}</a></span>)}</div>
             <br />
         </div>
     );
